@@ -41,7 +41,7 @@ function setup() {
     if [ ${BATS_TEST_NUMBER} -eq 1 ]; then
         create_config
     fi
-
+    
     # Per-test setup steps.
 }
 
@@ -76,12 +76,11 @@ function teardown() {
     [[ "$output" =~ "${CLOUDDNS_DNS_NAME}" ]]
 }
 
-@test "Deleting deployment ${DEPLOYMENT_NAME}" {
-    gcloud deployment-manager deployments delete "${DEPLOYMENT_NAME}" \
-        -q --project "${CLOUD_FOUNDATION_PROJECT_ID}"
+# @test "Deleting deployment ${DEPLOYMENT_NAME}" {
+#     gcloud deployment-manager deployments delete "${DEPLOYMENT_NAME}" \
+#         -q --project "${CLOUD_FOUNDATION_PROJECT_ID}"
 
-    run gcloud dns managed-zones list
-    [[ "$status" -eq 0 ]]
-    [[ ! "$output" =~ "${CLOUDDNS_ZONE_NAME}" ]]
-}
-
+#     run gcloud dns managed-zones list
+#     [[ "$status" -eq 0 ]]
+#     [[ ! "$output" =~ "${CLOUDDNS_ZONE_NAME}" ]]
+# }

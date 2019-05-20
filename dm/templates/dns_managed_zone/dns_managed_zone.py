@@ -17,46 +17,52 @@
 def generate_config(context):
     """ Entry point for the deployment resources. """
 
-    resources = []
-
     managed_zone_name = context.properties.get('zoneName')
     dnsname = context.properties['dnsName']
     managed_zone_description = context.properties['description']
     name_servers = '$(ref.' + context.env['name'] + '.nameServers)'
 
+    resources = []
+    outputs = [
+        {
+            'name': 'dnsName',
+            'value': dnsname
+        },
+        {
+            'name': 'managedZoneDescription',
+            'value': managed_zone_description
+        },
+        {
+            'name': 'nameServers',
+            'value': name_servers
+        },
+        {
+            'name': 'managedZoneName',
+            'value': managed_zone_name
+        }
+    ]
+
     managed_zone = {
         'name': context.env['name'],
-        'type': 'dns.v1.managedZone',
-        'properties':
-            {
-                'name': managed_zone_name,
-                'dnsName': dnsname,
-                'description': managed_zone_description
-            }
+        'type': 'gcp-types/dns-v1:managedZones',
+        'properties': {
+            'name': managed_zone_name,
+            'dnsName': dnsname,
+            'description': managed_zone_description
+        }
     }
 
+    # making resources and outputs for optional properties
+    for prop in ('nameServers', 'nameServerSet',
+                 'privateVisibilityConfig', 'dnssecConfig', 'visibility'):
+        if property in context.properties:
+            managed_zone['properties'][prop] = context.properties[prop]
+            outputs.append(
+                {
+                    'name': prop,
+                    'value': context.properties[prop]
+                }
+            )
     resources.append(managed_zone)
 
-    return {
-        'resources':
-            resources,
-        'outputs':
-            [
-                {
-                    'name': 'dnsName',
-                    'value': dnsname
-                },
-                {
-                    'name': 'managedZoneDescription',
-                    'value': managed_zone_description
-                },
-                {
-                    'name': 'nameServers',
-                    'value': name_servers
-                },
-                {
-                    'name': 'managedZoneName',
-                    'value': managed_zone_name
-                }
-            ]
-    }
+    return {'resources': resources, 'outputs': outputs}
