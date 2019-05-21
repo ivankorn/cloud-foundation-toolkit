@@ -77,10 +77,10 @@ function teardown() {
     [[ "$output" =~ "${CLOUDDNS_DNS_NAME}" ]]
 }
 
-@test "Verify if a VISIBILITY matches ${VISIBILITY}" {
+@test "Make sure that VISIBILITY is not \`public\`" {
     run gcloud dns managed-zones describe ${CLOUDDNS_ZONE_NAME}
     [[ "$status" -eq 0 ]]
-    [[ "$output" =~ "visibility: ${VISIBILITY}" ]]
+    [[ ! "$output" =~ "visibility: public" ]]
 }
 
 @test "Deleting deployment ${DEPLOYMENT_NAME}" {
