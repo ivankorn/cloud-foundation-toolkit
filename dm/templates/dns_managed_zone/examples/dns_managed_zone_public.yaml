@@ -1,7 +1,7 @@
 # Example of the DNS managed zone template usage.
 #
-# In this example, a DNS managed zone is created with the use of
-# the `zoneName` and `dnsName` properties. 
+# In this example, a Public DNS managed zone is created with the use of
+# the `zoneName`, `dnsName` and `visibility` properties. 
 
 imports:
   - path: templates/dns_managed_zone/dns_managed_zone.py
@@ -13,5 +13,5 @@ resources:
     properties:
       zoneName: public-mz
       dnsName: public-test.local.
-      description: "My example public DNS Managed Zone"
+      description: "Public DNS Managed Zone"
       visibility: public

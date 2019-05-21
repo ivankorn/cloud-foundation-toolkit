@@ -75,6 +75,12 @@ properties:
   dnssecConfig:
     type: object
     description: DNSSEC configuration.
+  forwardingConfig:
+    type: array
+    description: | 
+      The presence for this field indicates that outbound forwarding is enabled
+      for this zone. The value of this field contains the set of destinations 
+      to forward to.
 outputs:
   properties:
     - dnsName:
@@ -104,6 +110,12 @@ outputs:
     - dnssecConfig:
         type: object
         description: DNSSEC configuration.
+    - forwardingConfig:
+        type: array
+        description: | 
+          The presence for this field indicates that outbound forwarding is 
+          enabled for this zone. The value of this field contains the set of 
+          destinations to forward to.
 documentation:
   - templates/dns_managed_zone/README.md
 
