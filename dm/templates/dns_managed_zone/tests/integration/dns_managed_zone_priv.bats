@@ -22,7 +22,7 @@ if [[ -e "${RANDOM_FILE}" ]]; then
     export CLOUDDNS_ZONE_NAME="test-managed-zone-${RAND}"
     export CLOUDDNS_DNS_NAME="${RAND}.com."
     export CLOUDDNS_DESCRIPTION="Managed DNS Zone for Testing"
-    export VISIBILITY="private"
+    export CLOUDDNS_VISIBILITY="private"
 fi
 
 ########## HELPER FUNCTIONS ##########
@@ -77,10 +77,10 @@ function teardown() {
     [[ "$output" =~ "${CLOUDDNS_DNS_NAME}" ]]
 }
 
-@test "Make sure that VISIBILITY is not \`public\`" {
+@test "Verify if visibility is ${CLOUDDNS_VISIBILITY}" {
     run gcloud dns managed-zones describe ${CLOUDDNS_ZONE_NAME}
     [[ "$status" -eq 0 ]]
-    [[ ! "$output" =~ "visibility: public" ]]
+    [[ "$output" =~ "visibility: ${CLOUDDNS_VISIBILITY}" ]]
 }
 
 @test "Deleting deployment ${DEPLOYMENT_NAME}" {

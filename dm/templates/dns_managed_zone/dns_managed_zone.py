@@ -53,9 +53,8 @@ def generate_config(context):
     }
 
     # making resources and outputs for optional properties
-    for prop in ('nameServers', 'nameServerSet',
-                 'privateVisibilityConfig', 'dnssecConfig', 'visibility'):
-        if property in context.properties:
+    for prop in context.properties:
+        if prop not in managed_zone['properties']:
             managed_zone['properties'][prop] = context.properties[prop]
             outputs.append(
                 {

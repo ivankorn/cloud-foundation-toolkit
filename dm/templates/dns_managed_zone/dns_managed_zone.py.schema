@@ -51,7 +51,30 @@ properties:
       managed zone's function.
   nameServers:
     type: array
-
+    description: | 
+      Delegate your managed_zone to these virtual name servers; defined by the
+      server (output only)
+  nameServerSet:
+    type: string
+    description: | 
+      Optionally specifies the NameServerSet for this ManagedZone. A 
+      NameServerSet is a set of DNS name servers that all host the same 
+      ManagedZones. Most users will leave this field unset.
+  visibility:
+    type: string
+    pattern: ^(public|private)$
+    description: |
+      The zone's visibility. Public zones are exposed to the Internet, while 
+      private zones are visible only to Virtual Private Cloud resources. 
+      Acceptable values are "private" and "public".
+  privateVisibilityConfig:
+    type: object
+    description: |
+      For privately visible zones, the set of Virtual Private Cloud resources
+      that the zone is visible from.
+  dnssecConfig:
+    type: object
+    description: DNSSEC configuration.
 outputs:
   properties:
     - dnsName:
@@ -67,9 +90,25 @@ outputs:
     - managedZoneName:
         type: string
         description: The managed zone's resource name.
-
+    - visibility:
+        type: string
+        description: |
+          The zone's visibility. Public zones are exposed to the Internet, 
+          while private zones are visible only to Virtual Private Cloud 
+          resources.
+    - privateVisibilityConfig:
+        type: object
+        description: |
+          For privately visible zones, the set of Virtual Private Cloud 
+          resources that the zone is visible from.
+    - dnssecConfig:
+        type: object
+        description: DNSSEC configuration.
 documentation:
   - templates/dns_managed_zone/README.md
 
 examples:
   - templates/dns_managed_zone/examples/dns_managed_zone.yaml
+  - templates/dns_managed_zone/examples/dns_managed_zone_private.yaml
+  - templates/dns_managed_zone/examples/dns_managed_zone_private_visibility_config.yaml
+  - templates/dns_managed_zone/examples/dns_managed_zone_public.yaml

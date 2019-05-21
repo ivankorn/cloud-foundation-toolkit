@@ -1,0 +1,22 @@
+# Example of the DNS managed zone template usage.
+#
+# In this example, a DNS managed zone is created with the use of
+# the `zoneName` and `dnsName` properties. 
+
+imports:
+  - path: templates/dns_managed_zone/dns_managed_zone.py
+    name: dns_managed_zone.py
+
+resources:
+  - name: private-mz-with-visibility
+    type: dns_managed_zone.py
+    properties:
+      zoneName: private-mz-visibility
+      dnsName: private-visibility.local.
+      description: "My example private DNS Managed Zone with visibility config"
+      visibility: private
+      privateVisibilityConfig:
+        kind: "dns#managedZonePrivateVisibilityConfig"
+        networks:
+          - kind: "dns#managedZonePrivateVisibilityConfigNetwork"
+            networkUrl: "https://www.googleapis.com/compute/v1/projects/gl-akopachevskyy-dm-seed-test/global/networks/default"

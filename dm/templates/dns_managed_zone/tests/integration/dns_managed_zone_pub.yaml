@@ -12,5 +12,5 @@ resources:
       zoneName: ${CLOUDDNS_ZONE_NAME}
       dnsName: ${CLOUDDNS_DNS_NAME}
       description: ${CLOUDDNS_DESCRIPTION}
-      visibility: ${VISIBILITY}
+      visibility: ${CLOUDDNS_VISIBILITY}
       
